@@ -70,12 +70,37 @@ The main points to highlight of this section are:
 
 ### Approaches
 ---
+The approach for this task was datadriven and it relies heavily in clustering, with some variations in the generation of the
+message representation.
+
+The number of english chats in the dataset was around 60 million, so, again, a subset of 10000 was taken from it, because a bigger
+sample required more time that the disposed to achieve results.
+
+The unit selected to clusterize were the messages. Each unit was vectorized with one of the following techniques:
+- Bag of words.
+- Word2Vec embeddings.
+- FastText embeddings.
+
+Those vectors were concatenated with a vector that represented the number of ocurrences in a list of [bad words](https://www.cs.cmu.edu/~biglou/resources/bad-words.txt) and the intensity score for that message.
+
+All vectors were normalized and features with high correlation where removed.
+
 #### Bag of words clustering
 ---
+To explore further go the the [notebook](https://github.com/csralvall/online_game_toxicity/blob/main/clustering_bow.ipynb).
+
+The number of clusters choosen for this approach were 50. It was enough to test the capabilities of the mehtod.
+The distribution of chats in clusters was the following:
+
+As you can see, for this clustering approach and this number of clusters there were a big number of messages without
+a clear difference with the rest of them.
+
 #### Word2Vec clustering
 ---
+To explore further go the the [notebook]().
 #### FastText clustering
 ---
+To explore further go the the [notebook]().
 ### Results
 ---
 ### Conclusion
