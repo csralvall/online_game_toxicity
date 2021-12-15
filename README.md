@@ -1,19 +1,21 @@
-# Toxicity tipification in online game chats
----
- > Project developed for the course Text Mining, given by Dr. Laura Alonso Allemany, FAMAF-UNC, 2021.
- 
+# Toxicity tipification in online game chats ---
+ > Subject: Text Mining, FAMAF-UNC, 2021.
+ > Teacher: Laura Alonso Allemany
  > Author: César Alvarez Vallero
-### Introduction
----
-In the last 20 years the grow of online gaming has increased the human communication through online
-chats inside games. The mix of high competitiveness and relative anonimity have made a perfect
-place for the development of toxicity.
 
-The goal of this work is to detect types of toxicity inside chat conversations from online games.
-Some inspiration was taken from the research initiative founded by Jigsaw and Google (Alphabet
-subsidiaries) and their kaggle competitions, were they incentivize the creation of models to detect
-toxicity in the comments of wikipedia edtion section. The initial classification provided by the
-challenges settled a baseline to classify types of toxicity:
+### Introduction
+--- 
+In the last 20 years the grow of online gaming has increased the human
+communication through online chats inside games. The mix of high
+competitiveness and relative anonimity have made a perfect place for the
+development of toxicity.
+
+The goal of this work is to detect types of toxicity inside chat conversations
+from online games. Some inspiration was taken from the research initiative
+founded by Jigsaw and Google (Alphabet subsidiaries) and their kaggle
+competitions, were they incentivize the creation of models to detect toxicity
+in the comments of wikipedia edtion section. The initial classification
+provided by the challenges settled a baseline to classify types of toxicity:
 
 - severe_toxicity
 - obscene
@@ -22,18 +24,23 @@ challenges settled a baseline to classify types of toxicity:
 - identity_attack
 - sexual_explicit
 
-Although the current work tries to avoid using this as a framework rather than a guideline.
+Although the current work tries to avoid using this as a framework rather than
+a guideline.
 
 ### Dataset
----
-The dataset used is publicly available in [kaggle](https://www.kaggle.com/romovpa/gosuai-dota-2-game-chats).
-It contains chats of almost 1 million matches from public matchmaking of the game Dota2 by Valve.
+--- 
+The dataset used is publicly available in
+[kaggle](https://www.kaggle.com/romovpa/gosuai-dota-2-game-chats). It contains
+chats of almost 1 million matches from public matchmaking of the game Dota2 by
+Valve.
 
-To perform the task a subset of the whole dataset was selected. That subset contained all the english
-messages inside the dataset. Its total size is around 60 million messages.
+To perform the task a subset of the whole dataset was selected. That subset
+contained all the english messages inside the dataset. Its total size is around
+60 million messages.
 
-Dota2 is an online game that belongs to the genre Multiplayer Online Battle Arena (MOBA). It involves
-two teams and an objective that implies the defeat of the opposite team.
+Dota2 is an online game that belongs to the genre Multiplayer Online Battle
+Arena (MOBA). It involves two teams and an objective that implies the defeat of
+the opposite team.
 
 The initial structure of the dataset was the following:
 
@@ -53,11 +60,13 @@ Some related works using this dataset are:
 
 ### Preprocessing
 ---
-As the dataset contained almost a million matches with at least one hundred messages each one, the size of data
-became unmanagable rapidly and required different approachs to overcome that difficulty. Most of the techniques
-used involved parallelization.
+As the dataset contained almost a million matches with at least one hundred
+messages each one, the size of data became unmanagable rapidly and required
+different approachs to overcome that difficulty. Most of the techniques used
+involved parallelization.
 
-The task performed over the data can be seen in this [notebook](https://github.com/csralvall/online_game_toxicity/blob/main/preprocessing.ipynb).
+The task performed over the data can be seen in this
+[notebook](./preprocessing.ipynb).
 
 The main points to highlight of this section are:
 - Language detection
@@ -70,37 +79,46 @@ The main points to highlight of this section are:
 
 ### Approaches
 ---
-The approach for this task was datadriven and it relies heavily in clustering, with some variations in the generation of the
-message representation.
+The approach for this task was datadriven and it relies heavily in clustering,
+with some variations in the generation of the message representation.
 
-The number of english chats in the dataset was around 60 million, so, again, a subset of 10000 was taken from it, because a bigger
-sample required more time that the disposed to achieve results.
+The number of english chats in the dataset was around 60 million, so, again, a
+subset of 10000 was taken from it, because a bigger sample required more time
+that the disposed to achieve results.
 
-The unit selected to clusterize were the messages. Each unit was vectorized with one of the following techniques:
+The unit selected to clusterize were the messages. Each unit was vectorized
+with one of the following techniques:
 - Bag of words.
 - Word2Vec embeddings.
 - FastText embeddings.
 
-Those vectors were concatenated with a vector that represented the number of ocurrences in a list of [bad words](https://www.cs.cmu.edu/~biglou/resources/bad-words.txt) and the intensity score for that message.
+Those vectors were concatenated with a vector that represented the number of
+ocurrences in a list of [bad words](https://www.cs.cmu.edu/~biglou/resources/bad-words.txt)
+and the intensity score for that message.
 
-All vectors were normalized and features with high correlation where removed.
+All vectors were normalized and features with high correlation were removed.
 
 #### Bag of words clustering
----
-To explore further go the the [notebook](https://github.com/csralvall/online_game_toxicity/blob/main/clustering_bow.ipynb).
+--- 
+To explore further go to the [notebook](./clustering_bow.ipynb).
 
-The number of clusters choosen for this approach were 50. It was enough to test the capabilities of the mehtod.
-The distribution of chats in clusters was the following:
+The number of clusters choosen for this approach were 50. It was enough to test
+the capabilities of the mehtod. The distribution of chats in clusters was the
+following:
 
-As you can see, for this clustering approach and this number of clusters there were a big number of messages without
-a clear difference with the rest of them.
+As you can see, for this clustering approach and this number of clusters there
+were a big number of messages without a clear difference with the rest of them.
+
+![TSNE graph - clustering](./images/clustering_bow.png)
 
 #### Word2Vec clustering
 ---
-To explore further go the the [notebook]().
+To explore further go the the [notebook](./clustering_w2v.ipynb).
+![TSNE graph - clustering](./images/clustering_w2v.png)
 #### FastText clustering
 ---
-To explore further go the the [notebook]().
+To explore further go the the [notebook](./clustering_ftt.ipynb).
+![TSNE graph - clustering](./images/clustering_ftt.png)
 ### Results
 ---
 ### Conclusion
