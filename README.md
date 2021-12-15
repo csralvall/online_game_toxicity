@@ -1,6 +1,9 @@
-# Toxicity tipification in online game chats ---
+# Toxicity tipification in online game chats
+---
  > Subject: Text Mining, FAMAF-UNC, 2021.
+
  > Teacher: Laura Alonso Allemany
+
  > Author: César Alvarez Vallero
 
 ### Introduction
