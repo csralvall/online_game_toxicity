@@ -106,11 +106,53 @@ All vectors were normalized and features with high correlation were removed.
 To explore further go to the [notebook](./clustering_bow.ipynb).
 
 The number of clusters choosen for this approach were 50. It was enough to test
-the capabilities of the mehtod. The distribution of chats in clusters was the
-following:
+the capabilities of the mehtod.
 
-As you can see, for this clustering approach and this number of clusters there
-were a big number of messages without a clear difference with the rest of them.
+The distribution of chats in clusters was the following:
+
+
+As you can see, for this clustering approach and this number of clusters, the
+cluster 2 reunites all those messages that are unique or couldn't be differentiated
+clearly for the rest of them.
+
+Each message were anotated with their cluster, and then the reduced dataset
+was grouped by cluster:
+
+```python
+bow_group = df_test.groupby('bow_clusters')
+```
+
+For each cluster a toxicity score was computed:
+
+```python
+bow_score = (bow_group['toxicity'].sum() / bow_group['nwords'].sum())
+bow_scored = pd.DataFrame({'score': bow_score.values, 'size': bow_group.size()})
+```
+
+Then, they were sorted and filtered to get the cluster with the greatest score:
+
+```python
+bow_scored = bow_scored[bow_scored['score'] > 0.14]
+bow_scored = bow_scored.sort_values(by=['score', 'size'], ascending=[False, False])
+```
+
+With the following results:
+
+|bow_clusters|    score   |    size    |
+|------------|------------|------------|
+|32.0        |0.545455    |51          |
+|10.0        |0.460000    |17          |
+|38.0        |0.455285    |45          |
+|9.0         |0.451104    |117         |
+|22.0        |0.444853    |200         |
+|29.0        |0.387013    |123         |
+|30.0        |0.379004    |186         |
+|5.0         |0.365177    |195         |
+|12.0        |0.315789    |4           |
+|15.0        |0.250000    |1           |
+
+
+A dimensionality reduction with TSNE was applied to visualize the clusters and highlight the top toxic clusters of the previous table:
 
 ![TSNE graph - clustering](./images/clustering_bow.png)
 
