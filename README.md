@@ -105,17 +105,18 @@ All vectors were normalized and features with high correlation were removed.
 --- 
 To explore further go to the [notebook](./clustering_bow.ipynb).
 
-The number of clusters choosen for this approach were 50. It was enough to test
+The number of clusters choosen for this approach was 50. It was enough to test
 the capabilities of the mehtod.
 
 The distribution of chats in clusters was the following:
 
+![Cluster distribution - BOW](./images/clusters_bow.png)
 
 As you can see, for this clustering approach and this number of clusters, the
-cluster 2 reunites all those messages that are unique or couldn't be differentiated
-clearly for the rest of them.
+cluster 2 reunites all those messages that are unique or couldn't be
+differentiated clearly of the rest of them.
 
-Each message were anotated with their cluster, and then the reduced dataset
+Each message was annotated with their cluster, and then the reduced dataset
 was grouped by cluster:
 
 ```python
@@ -152,18 +153,20 @@ With the following results:
 |15.0        |0.250000    |1           |
 
 
-A dimensionality reduction with TSNE was applied to visualize the clusters and highlight the top toxic clusters of the previous table:
+A dimensionality reduction with TSNE was applied to visualize the clusters and
+highlight the top toxic clusters of the previous table:
 
-![TSNE graph - clustering](./images/clustering_bow.png)
+![TSNE graph - clustering](./images/TSNE_bow.png)
+
+##### Results
+---
 
 #### Word2Vec clustering
 ---
 To explore further go the the [notebook](./clustering_w2v.ipynb).
-![TSNE graph - clustering](./images/clustering_w2v.png)
+![TSNE graph - clustering](./images/TSNE_w2v.png)
 #### FastText clustering
 ---
 To explore further go the the [notebook](./clustering_ftt.ipynb).
-![TSNE graph - clustering](./images/clustering_ftt.png)
-### Results
----
+![TSNE graph - clustering](./images/TSNE_ftt.png)
 ### Conclusion
