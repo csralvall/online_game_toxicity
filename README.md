@@ -6,7 +6,10 @@
 
  > Author: César Alvarez Vallero
 
-### Introduction
+
+<details>
+  <summary>### Introduction</summary>
+
 --- 
 In the last 20 years the grow of online gaming has increased the human
 communication through online chats inside games. The mix of high
@@ -29,6 +32,8 @@ provided by the challenges settled a baseline to classify types of toxicity:
 
 Although the current work tries to avoid using this as a framework rather than
 a guideline.
+
+</details>
 
 ### Dataset
 --- 
