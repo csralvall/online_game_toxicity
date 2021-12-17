@@ -129,7 +129,6 @@ For each cluster a toxicity score was computed:
 bow_score = (bow_group['toxicity'].sum() / bow_group['nwords'].sum())
 bow_scored = pd.DataFrame({'score': bow_score.values, 'size': bow_group.size()})
 ```
-
 Then, they were sorted and filtered to get the cluster with the greatest score:
 
 ```python
@@ -137,10 +136,11 @@ bow_scored = bow_scored[bow_scored['score'] > 0.14]
 bow_scored = bow_scored.sort_values(by=['score', 'size'], ascending=[False, False])
 ```
 
-With the following results:
+<a name="bow-score-table"></a>
+The following results were obtained from the previous code:
 
 |bow_clusters|    score   |    size    |
-|------------|------------|------------|
+|------------|-----------:|-----------:|
 |32.0        |0.545455    |51          |
 |10.0        |0.460000    |17          |
 |38.0        |0.455285    |45          |
@@ -152,14 +152,124 @@ With the following results:
 |12.0        |0.315789    |4           |
 |15.0        |0.250000    |1           |
 
+The content of the most toxic clusters were explored in deep. You can
+see some of their content in the following tables. To get the complete content
+of the clusters, please, go to the jupyter notebook:
+
+- 1
+
+```python
+bow_group.get_group(32)[['match','text']]
+```
+
+|   match | text                                                |
+|--------:|:----------------------------------------------------|
+|     183 | you suck at dota                                    |
+|     227 | come suck my dick                                   |
+|     972 | can you suck my dick?                               |
+|    1383 | Sry clock but u suck :)                             |
+|    1395 | suck my big black cock                              |
+|    1459 | and u suck as an orgy                               |
+|    2201 | suck my balls mirana                                |
+|    2459 | you both suck at english                            |
+|    2459 | you sure suck your daddy's dick                     |
+|    2586 | how long did you suck their dick for to boost you?? |
+|    3108 | xDD you suck                                        |
+|    3587 | suck my dick as a present for me                    |
+|    3587 | i got no gurl to suck it for me                     |
+|    4155 | suck my dick riki                                   |
+|    4247 | both our teams suck balls                           |
+|    4304 | ill watch ur mom suck my dick                       |
+|    4397 | who has nice tits and wanna suck my cock?           |
+|    4586 | suck your momma's dick BOYYE                        |
+|    4769 | you all suck tho xD                                 |
+|    4975 | suck my dick you lesser..                           |
+|    5202 | ur teamates good...u suck                           |
+
+- 2
+
+```python
+bow_group.get_group(10)[['match','text']
+```
+
+|   match | text                                                                                                       |
+|--------:|:-----------------------------------------------------------------------------------------------------------|
+|     183 | you dumb and blind?                                                                                        |
+|     183 | its pretty dumb you're complaining, you're literally doing the worst on your team and holding them back LC |
+|     290 | my lanes were dumb                                                                                         |
+|     537 | that was dumb                                                                                              |
+|     539 | real tired of ur dumb ass                                                                                  |
+|     741 | cause you guys so dumb cant win mmr                                                                        |
+|     839 | sb dumb charge mid too                                                                                     |
+|    1381 | talent, ignore this dumb rubick                                                                            |
+|    2361 | youre fucking dumb                                                                                         |
+|    2361 | you. are. fucking. dumb                                                                                    |
+|    2420 | it never was you dumb shit                                                                                 |
+|    3276 | can be that dumb                                                                                           |
+|    3891 | What a dumb legend player                                                                                  |
+|    4189 | the axe pick was dumb... but going 10 death...                                                             |
+|    4563 | dumb as you deads ka talaga                                                                                |
+|    4902 | are you dumb                                                                                               |
+|    4983 | report pudge sp dumb                                                                                       |
+
+- 3
+
+```python
+bow_group.get_group(38)[['match','text']
+```
+
+
+|   match | text                                                     |
+|--------:|:---------------------------------------------------------|
+|     445 | nice mirana idiot                                        |
+|     491 | have idiot miranma                                       |
+|     554 | fucking idiot offlaner                                   |
+|     775 | keep focus idiot                                         |
+|    1437 | sorry my friend is an idiot :)                           |
+|    1497 | ok u are idiot too                                       |
+|    1711 | you speak idiot?                                         |
+|    1711 | i cant do anything idiot gay hero                        |
+|    1807 | ้he bought sliver edge idiot                              |
+|    1807 | idiot your sup                                           |
+|    1831 | ez to say when you dont have idiot team mates            |
+|    2420 | report this idiot slark                                  |
+|    2623 | fucking idiot team                                       |
+|    2726 | alright youre just an idiot                              |
+|    2875 | pick idiot heros                                         |
+|    2965 | idiot want pause he is dead                              |
+|    3248 | die like a fking idiot                                   |
+|    3527 | this idiot mid unpausing                                 |
+|    3527 | he wants ez win coz hes too idiot                        |
+|    3660 | this russian idiot jakiro                                |
+|    3825 | this fuckign idiot team                                  |
+|    4063 | you hatme me idiot                                       |
+|    4096 | Idiot sopt pausing                                       |
+|    4096 | idiot never learn                                        |
+|    4188 | he is the idiot who cant play other role then carry      |
+|    4837 | its sd mode are u idiot?                                 |
+|    5074 | idiot invoker ever                                       |
+|    5074 | injoker no skill idiot                                   |
+|    5158 | idiot why go back]                                       |
+|    5202 | of course its sniper idiot                               |
+|    5375 | Are you some kind of idiot?                              |
+|    5396 | you are fucking idiot                                    |
 
 A dimensionality reduction with TSNE was applied to visualize the clusters and
-highlight the top toxic clusters of the previous table:
+highlight the top toxic clusters of the
+[top toxic clusters table](bow-score-table):
 
 ![TSNE graph - clustering](./images/TSNE_bow.png)
 
 ##### Results
 ---
+
+Although the content of the clusters is clearly toxic, its hard to distinguish
+subtypes of toxicity in them.
+By the nature of this approach and the kind of vectorization applied, you can
+recognize that the clustering is too tied to some words, specially those
+included in the list of bad words, and that some underlying structures to toxicity
+might be hidden or even ignored behind these strong indicators because of their
+relevance for the clustering technique applied.
 
 #### Word2Vec clustering
 ---
