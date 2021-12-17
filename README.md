@@ -8,8 +8,9 @@
 
 
 <details>
-  <summary>### Introduction</summary>
+  <summary>Introduction</summary>
 
+### Introduction
 --- 
 In the last 20 years the grow of online gaming has increased the human
 communication through online chats inside games. The mix of high
@@ -34,6 +35,9 @@ Although the current work tries to avoid using this as a framework rather than
 a guideline.
 
 </details>
+
+<details>
+  <summary>Dataset</summary>
 
 ### Dataset
 --- 
@@ -65,6 +69,10 @@ Some related works using this dataset are:
 - [Measuring toxicity in Dota 2](https://www.h4pz.co/dota-2-toxicity)
 - [Toxicity detection in gaming](https://databricks.com/notebooks/toxic-test-gam/index.html#01_intro.html)
 
+</details>
+
+<details>
+  <summary>Preprocessing</summary>
 
 ### Preprocessing
 ---
@@ -84,6 +92,10 @@ The main points to highlight of this section are:
   - Intensity: presence of capital letters and exclamation signs
   - Toxicity: presence of "bad words" obtained from a [web list](https://www.cs.cmu.edu/~biglou/resources/bad-words.txt)
 
+</details>
+
+<details>
+  <summary>Approaches</summary>
 
 ### Approaches
 ---
@@ -105,6 +117,9 @@ ocurrences in a list of [bad words](https://www.cs.cmu.edu/~biglou/resources/bad
 and the intensity score for that message.
 
 All vectors were normalized and features with high correlation were removed.
+
+<details>
+  <summary>Bag of Words</summary>
 
 #### Bag of words clustering
 --- 
@@ -326,6 +341,11 @@ recognize that the clustering is too tied to some words, specially those
 included in the list of bad words, and that some underlying structures to toxicity
 might be hidden or even ignored behind these strong indicators because of their
 relevance for the clustering technique applied.
+
+</details>
+
+<details>
+  <summary>Word2Vec</summary>
 
 #### Word2Vec clustering
 ---
@@ -619,10 +639,26 @@ messages in them have more words in common and some syntax structure relation
 can be recognized. But all of that is not enough to obtain clearly separated kinds
 of toxicity in them.
 
+</details>
+
+<details>
+  <summary>FastText</summary>
+
 #### FastText clustering
 ---
 To explore further go the the [notebook](./clustering_ftt.ipynb).
 ![TSNE graph - clustering](./images/TSNE_ftt.png)
 ##### Results
 ---
+
+</details>
+
+</details>
+
+<details>
+  <summary>Conclusion</summary>
+
 ### Conclusion
+
+</details>
+
