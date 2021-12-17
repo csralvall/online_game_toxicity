@@ -157,7 +157,7 @@ bow_scored = bow_scored[bow_scored['score'] > 0.14]
 bow_scored = bow_scored.sort_values(by=['score', 'size'], ascending=[False, False])
 ```
 
-<a name="bow-score-table"></a>
+<a name="bow-score-table" />
 The following results were obtained from the previous code:
 
 |bow_clusters|    score   |    size    |
@@ -326,7 +326,7 @@ bow_group.get_group(38)[['match','text']
 </details>
 
 A dimensionality reduction with TSNE was applied to visualize the clusters and
-highlight the top toxic clusters of [this approach](bow-score-table):
+highlight the top toxic clusters of the [table](#bow-score-table):
 
 ![TSNE graph - clustering](./images/TSNE_bow.png)
 
@@ -383,7 +383,7 @@ w2v_scored = w2v_scored[w2v_scored['score'] > 0.5]
 w2v_scored = w2v_scored.sort_values(by=['score', 'size'], ascending=[False, False])
 ```
 
-<a name="w2v-score-table"></a>
+<a name="w2v-score-table" />
 The following results were obtained from the previous code:
 
 |   w2v_clusters |    score |   size |
@@ -624,8 +624,9 @@ print(w2v_group.get_group(22)[['match', 'text']].to_markdown())
 </details>
 
 A dimensionality reduction with TSNE was applied to visualize the clusters and
-highlight the top toxic clusters of [this approach](w2v-score-table):
+highlight the top toxic clusters of the [table](#w2v-score-table):
 ![TSNE graph - clustering](./images/TSNE_w2v.png)
+ 
 ##### Results
 ---
 It is important to note first the drawbacks of the score designed to reduce the
