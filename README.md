@@ -648,9 +648,283 @@ of toxicity in them.
 #### FastText clustering
 ---
 To explore further go the the [notebook](./clustering_ftt.ipynb).
+
+The number of clusters choosen for this approach was 100, because it generated
+a well distributed clustering with a good number of messages in each cluster.
+
+The distribution of chats in clusters was the following:
+
+![Cluster distribution - FastText](./images/clusters_ftt.png)
+
+The distribution shown above is very close to uniformity, although some
+outerliers my indicate lack of cohesion in the cluster.
+
+Each message was annotated with their cluster, and then the reduced dataset
+was grouped by cluster:
+
+```python
+ftt_group = df_test.groupby('ftt_clusters')
+```
+
+For each cluster a toxicity score was computed:
+
+```python
+ftt_score = (ftt_group['toxicity'].sum() / ftt_group['nwords'].sum())
+ftt_scored = pd.DataFrame({'score': ftt_score.values, 'size': ftt_group.size()})
+```
+Then, they were sorted and filtered to get the cluster with the greatest score:
+
+```python
+ftt_scored = ftt_scored[ftt_scored['score'] > 0.25]
+ftt_scored = ftt_scored.sort_values(by=['score', 'size'], ascending=[False, False])
+```
+
+<a name="ftt-score-table" />
+The following results were obtained from the previous code:
+
+|   ftt_clusters |    score |   size |
+|---------------:|---------:|-------:|
+|             55 | 0.631579 |     19 |
+|             33 | 0.627119 |     39 |
+|             80 | 0.625    |     22 |
+|              2 | 0.391813 |     76 |
+|             68 | 0.354167 |     67 |
+|             43 | 0.317757 |     44 |
+|             25 | 0.270588 |     73 |
+|             41 | 0.260771 |    133 |
+
+The content of the most toxic clusters were explored in deep. You can
+see some of their content in the following tables:
+
+<details>
+  <summary>Cluster #55</summary>
+
+```python
+ftt_group.get_group(55)[['match','text']]
+```
+
+|   match | text                    |
+|--------:|:------------------------|
+|     121 | you are shit            |
+|    1249 | had to take a shit      |
+|    1504 | name of the ship        |
+|    1552 | thats shit              |
+|    1797 | youre shit              |
+|    1797 | why is ur name shit     |
+|    1906 | and cant do shit        |
+|    2347 | i have the shittiest    |
+|    2793 | with this shitshiow     |
+|    2975 | i dont give shit        |
+|    3177 | 1-10 shitt              |
+|    3662 | and ds cant do shit     |
+|    4332 | with this shit          |
+|    4479 | i wont hit u            |
+|    4722 | hit him more            |
+|    4736 | cant even lashit        |
+|    4837 | what now mk and bh shit |
+|    4902 | then do this shit       |
+|    4963 | i cant do shit          |
+
+</details>
+
+<details>
+  <summary>Cluster #33</summary>
+
+```python
+ftt_group.get_group(33)[['match','text']]
+```
+
+|   match | text                             |
+|--------:|:---------------------------------|
+|      82 | Ima out to fuck                  |
+|     121 | what the fuck                    |
+|     121 | what the fuck                    |
+|     368 | It fucked me more than you.      |
+|     612 | get the fuck out                 |
+|     796 | what the fukc                    |
+|     823 | willow can't admit she fucked u  |
+|     981 | what the fucl                    |
+|    1033 | bc fuck u thats y                |
+|    1122 | what the fuck                    |
+|    1269 | WHY THE FUCK ARE YOU THERe       |
+|    1345 | she almost fucked me up          |
+|    1741 | can you fuck off ?               |
+|    1859 | fuck that dark willow            |
+|    1877 | alright, fuck you kunkka         |
+|    1890 | what the fuck?                   |
+|    1898 | 17minutes fuck off rd??          |
+|    1991 | how the fuck                     |
+|    2015 | go fuck off somewhere else       |
+|    2083 | what the fuck                    |
+|    2328 | the fuck are you doing           |
+|    2361 | fuck off already                 |
+|    2458 | i did not fuck your gf           |
+|    2768 | the fuck  you doing there        |
+|    2803 | fuck you all                     |
+|    2931 | fuck you all                     |
+|    3750 | go to russian servers u fuck     |
+|    3777 | fuck off back to russian servers |
+|    4100 | i will skullfuck you             |
+|    4102 | WHAT THe FUCKIN PC               |
+|    4296 | FUCK THIS IDI0TS                 |
+|    4304 | i only fuck muslim girls         |
+|    4304 | i only fuck muslim girls         |
+|    4304 | i fuck gigi hadid                |
+|    4702 | the fuck are you doing           |
+|    4901 | fuck you tinker picker           |
+|    4960 | go fuck urself man               |
+|    4962 | who can fuck me？                |
+|    5030 | i will fuck u too now            |
+
+</details>
+
+<details>
+  <summary>Cluster #80</summary>
+
+```python
+ftt_group.get_group(80)[['match','text']]
+```
+
+|   match | text                                           |
+|--------:|:-----------------------------------------------|
+|      71 | I WOULD HAVE KILL HIM                          |
+|    1002 | I won0't kill you                              |
+|    1249 | you kill top[                                  |
+|    1345 | how i kill all of you                          |
+|    1395 | or again kill you                              |
+|    1877 | didnt even get the kill                        |
+|    1955 | gj. I can't kill you all                       |
+|    2347 | just go kill him                               |
+|    2586 | 8k mmr can'ty even get a kill in these lobbies |
+|    2659 | u kill him so much                             |
+|    2743 | so u wont kill me                              |
+|    2918 | not your 'skill'                               |
+|    3463 | not same skill                                 |
+|    3463 | not same skill                                 |
+|    3501 | now that was not a skill                       |
+|    3740 | its your skill                                 |
+|    4284 | Because you didnt kill me                      |
+|    4301 | you should kill me                             |
+|    4677 | why you kill                                   |
+|    4983 | IT WILL TAKE 5 TO KILL NE                      |
+|    5004 | u cant kill me                                 |
+|    5333 | i will kill myself                             |
+
+</details>
+
+<details>
+  <summary>Cluster #20</summary>
+
+```python
+ftt_group.get_group(2)[['match','text']]
+```
+
+|   match | text                                                          |
+|--------:|:--------------------------------------------------------------|
+|      71 | FUCK THIS PANGO                                               |
+|     107 | i fuck your mum                                               |
+|     153 | where the fuck is snow                                        |
+|     235 | SHUT THE FUCK UP                                              |
+|     378 | cant fuck with oracle!                                        |
+|     678 | fuck your mom                                                 |
+|     736 | who ther fuck gets bkb in LP?                                 |
+|     826 | fuck off dudes                                                |
+|     915 | what the fuck is your problem with m?                         |
+|     916 | she gay and she fucked u                                      |
+|    1003 | fuck your mother                                              |
+|    1093 | viper accountbuyer 100%                                       |
+|    1126 | how the fuck is this balance ?                                |
+|    1244 | one moment silence please                                     |
+|    1256 | chrono me for what u fuck                                     |
+|    1260 | fuck your moms                                                |
+|    1283 | YOU fuck only your mother                                     |
+|    1437 | waif fuck your beloved oness                                  |
+|    1540 | all is my fuckign intenrt                                     |
+|    1871 | SHUT THE$ FUCK UP                                             |
+|    1877 | again.. fuck you kunkka                                       |
+|    1882 | these mother Fuckers                                          |
+|    1933 | puck I will FUCK YOU                                          |
+|    1945 | fuck your family                                              |
+|    2033 | fuck that kid                                                 |
+|    2044 | will fuck you again bird                                      |
+|    2092 | get fucked later                                              |
+|    2420 | fucken lvl 16 after 44min?                                    |
+|    2436 | why the fuck u tped                                           |
+|    2440 | fuck all the niggas'                                          |
+|    2548 | go fuck yourself bick                                         |
+|    2596 | can u call him a fat fuck for me?                             |
+|    2655 | 100% mther fuker                                              |
+|    2738 | if i was not in this voids team i wish he has a loss  fuck it |
+|    2793 | i had to turn on music...                                     |
+|    2989 | fuck you techies                                              |
+|    3011 | just endla fucker                                             |
+|    3179 | so hard take 3 hero XD                                        |
+|    3204 | fuck you rat                                                  |
+|    3302 | fuck outta here                                               |
+|    3325 | see mother fucker                                             |
+|    3535 | fuck this cxarry                                              |
+|    3554 | silence now SNIPER                                            |
+|    3556 | CAN U JUST SHUT THE FUCK UP?                                  |
+|    3574 | omni i would fuck that girl on your pic                       |
+|    3701 | FUCK THIS TECHIES                                             |
+|    3762 | fuck you  kotl                                                |
+|    3762 | fuck you kotl                                                 |
+|    3869 | jugg fuck you                                                 |
+|    3896 | fuck you fuck you fuck you fuck you                           |
+|    3911 | it is fucking unranked chill the fuck out                     |
+|    4071 | fuck off weab                                                 |
+|    4074 | shut the hell up                                              |
+|    4084 | i will fuck your mother                                       |
+|    4123 | can u shut the fuck up                                        |
+|    4304 | u never fucked a girl havent u                                |
+|    4304 | ill fuck her                                                  |
+|    4304 | lets see ill fuck am's mom                                    |
+|    4304 | after i fuck ur mom                                           |
+|    4316 | fuck you mirana                                               |
+|    4355 | fuck you heart                                                |
+|    4493 | fuck you friend                                               |
+|    4564 | fuck u are bad                                                |
+|    4745 | this fuckgin tea                                              |
+|    4813 | i did fuck your mum                                           |
+|    4820 | fuck you nimnko                                               |
+|    4844 | who the fuck cares                                            |
+|    5109 | and said FUCK YOU                                             |
+|    5135 | FUCK your mom                                                 |
+|    5245 | am delete dota and seek help u mental fuck                    |
+|    5286 | this is our trash fuck lc                                     |
+|    5295 | fuck you nigg                                                 |
+|    5333 | ok kill yourself u fuck                                       |
+|    5336 | fuck off tusk                                                 |
+|    5363 | fuck your mom 2on1                                            |
+|    5395 | fuck you sniepr                                               |
+
+</details>
+
+A dimensionality reduction with TSNE was applied to visualize the clusters and
+highlight the top toxic clusters of the [table](#ftt-score-table):
+
 ![TSNE graph - clustering](./images/TSNE_ftt.png)
+
 ##### Results
 ---
+
+The hipothesis about the use of FastText was that the usage of character
+embeddings will improve the quality of clusters because it will allow the
+capture of slang vocabulary or abbreviations.
+
+That hipothesis show to be wrong at the moment of analysing the clusters.
+Although the clusters displayed contain a high number of toxic messages, they
+are blended with non-toxic messages related to the development of the game.
+
+However, someone may argue that the proportion of toxic messages is great. That
+impresion can be misleading because the proportion is related to the fact that
+the clusters were filtered and selected watching the score of toxicity of each
+one and that number can have great variations when using larger datasets or
+different numbers of clusters.
+
+Finally, the characteristics mentioned above imply that it couldn't be found any
+topic or type of toxicity that gather all the messages in a cluster or at least,
+a great number of them.
 
 </details>
 
@@ -660,6 +934,23 @@ To explore further go the the [notebook](./clustering_ftt.ipynb).
   <summary>Conclusion</summary>
 
 ### Conclusion
+
+Although the objective of this project couldn't be meet, it produced some
+conclusions that are worth mentioning:
+
+- The proliferation of toxicity in this dataset was clear and the intensity of
+  it is high.
+- In word2vec and bag of words the clusters can be clearly disinguished by the
+  proliferation of some toxic words in the content of their messages. In
+  FastText however, clustering fails to separate toxic messages from messages
+  who are not.
+- Clustering seems to lack the abilty to abstract elements that contribute to
+  the toxicity of a message beyond the toxic words in it.
+- The clusters obtained from the bag of words and word2vec clusterings can be
+  used to train a binary clasification model to detect toxicity in game chats.
+- A well designed report system in online chats could provide a free source of
+  annotated data to use in the analysis of toxicity and in the development of
+  hybrid models (human - machine) for moderation.
 
 </details>
 
