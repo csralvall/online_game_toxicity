@@ -156,37 +156,41 @@ The content of the most toxic clusters were explored in deep. You can
 see some of their content in the following tables. To get the complete content
 of the clusters, please, go to the jupyter notebook:
 
-- 1
+<details>
+  <summary>Cluster #32</summary>
 
-```python
-bow_group.get_group(32)[['match','text']]
-```
+  ```python
+  bow_group.get_group(32)[['match','text']]
+  ```
 
-|   match | text                                                |
-|--------:|:----------------------------------------------------|
-|     183 | you suck at dota                                    |
-|     227 | come suck my dick                                   |
-|     972 | can you suck my dick?                               |
-|    1383 | Sry clock but u suck :)                             |
-|    1395 | suck my big black cock                              |
-|    1459 | and u suck as an orgy                               |
-|    2201 | suck my balls mirana                                |
-|    2459 | you both suck at english                            |
-|    2459 | you sure suck your daddy's dick                     |
-|    2586 | how long did you suck their dick for to boost you?? |
-|    3108 | xDD you suck                                        |
-|    3587 | suck my dick as a present for me                    |
-|    3587 | i got no gurl to suck it for me                     |
-|    4155 | suck my dick riki                                   |
-|    4247 | both our teams suck balls                           |
-|    4304 | ill watch ur mom suck my dick                       |
-|    4397 | who has nice tits and wanna suck my cock?           |
-|    4586 | suck your momma's dick BOYYE                        |
-|    4769 | you all suck tho xD                                 |
-|    4975 | suck my dick you lesser..                           |
-|    5202 | ur teamates good...u suck                           |
+  |   match | text                                                |
+  |--------:|:----------------------------------------------------|
+  |     183 | you suck at dota                                    |
+  |     227 | come suck my dick                                   |
+  |     972 | can you suck my dick?                               |
+  |    1383 | Sry clock but u suck :)                             |
+  |    1395 | suck my big black cock                              |
+  |    1459 | and u suck as an orgy                               |
+  |    2201 | suck my balls mirana                                |
+  |    2459 | you both suck at english                            |
+  |    2459 | you sure suck your daddy's dick                     |
+  |    2586 | how long did you suck their dick for to boost you?? |
+  |    3108 | xDD you suck                                        |
+  |    3587 | suck my dick as a present for me                    |
+  |    3587 | i got no gurl to suck it for me                     |
+  |    4155 | suck my dick riki                                   |
+  |    4247 | both our teams suck balls                           |
+  |    4304 | ill watch ur mom suck my dick                       |
+  |    4397 | who has nice tits and wanna suck my cock?           |
+  |    4586 | suck your momma's dick BOYYE                        |
+  |    4769 | you all suck tho xD                                 |
+  |    4975 | suck my dick you lesser..                           |
+  |    5202 | ur teamates good...u suck                           |
 
-- 2
+</details>
+
+<details>
+  <summary>Cluster #10</summary>
 
 ```python
 bow_group.get_group(10)[['match','text']
@@ -212,7 +216,10 @@ bow_group.get_group(10)[['match','text']
 |    4902 | are you dumb                                                                                               |
 |    4983 | report pudge sp dumb                                                                                       |
 
-- 3
+</details
+
+<details>
+  <summary>Cluster #38</summary>
 
 ```python
 bow_group.get_group(38)[['match','text']
@@ -253,6 +260,8 @@ bow_group.get_group(38)[['match','text']
 |    5202 | of course its sniper idiot                               |
 |    5375 | Are you some kind of idiot?                              |
 |    5396 | you are fucking idiot                                    |
+
+</details>
 
 A dimensionality reduction with TSNE was applied to visualize the clusters and
 highlight the top toxic clusters of the
