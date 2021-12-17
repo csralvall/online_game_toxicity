@@ -216,7 +216,7 @@ bow_group.get_group(10)[['match','text']
 |    4902 | are you dumb                                                                                               |
 |    4983 | report pudge sp dumb                                                                                       |
 
-</details
+</details>
 
 <details>
   <summary>Cluster #38</summary>
