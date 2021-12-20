@@ -14,14 +14,14 @@
 --- 
 In the last 20 years the grow of online gaming has increased the human
 communication through online chats inside games. The mix of high
-competitiveness and relative anonimity have made a perfect place for the
+competitiveness and relative anonimity has made a perfect place for the
 development of toxicity.
 
 The goal of this work is to detect types of toxicity inside chat conversations
 from online games. Some inspiration was taken from the research initiative
 founded by Jigsaw and Google (Alphabet subsidiaries) and their kaggle
-competitions, were they incentivize the creation of models to detect toxicity
-in the comments of wikipedia edtion section. The initial classification
+competitions, where they incentivize the creation of models to detect toxicity
+in the comments of wikipedia edition section. The initial classification
 provided by the challenges settled a baseline to classify types of toxicity:
 
 - severe_toxicity
@@ -46,13 +46,12 @@ The dataset used is publicly available in
 chats of almost 1 million matches from public matchmaking of the game Dota2 by
 Valve.
 
-To perform the task a subset of the whole dataset was selected. That subset
-contained all the english messages inside the dataset. Its total size is around
-60 million messages.
-
 Dota2 is an online game that belongs to the genre Multiplayer Online Battle
 Arena (MOBA). It involves two teams and an objective that implies the defeat of
 the opposite team.
+
+To perform the task a subset of all the engilsh messages from the whole dataset
+was selected. Its total size was around 60 million messages.
 
 The initial structure of the dataset was the following:
 
@@ -78,7 +77,7 @@ Some related works using this dataset are:
 ---
 As the dataset contained almost a million matches with at least one hundred
 messages each one, the size of data became unmanagable rapidly and required
-different approachs to overcome that difficulty. Most of the techniques used
+different approaches to overcome that difficulty. Most of the techniques used
 involved parallelization.
 
 The task performed over the data can be seen in this
@@ -99,7 +98,7 @@ The main points to highlight of this section are:
 
 ### Approaches
 ---
-The approach for this task was datadriven and it relies heavily in clustering,
+The approach for this task was datadriven and it relied heavily in clustering,
 with some variations in the generation of the message representation.
 
 The number of english chats in the dataset was around 60 million, so, again, a
@@ -143,7 +142,6 @@ was grouped by cluster:
 ```python
 bow_group = df_test.groupby('bow_clusters')
 ```
-
 For each cluster a toxicity score was computed:
 
 ```python
@@ -338,9 +336,9 @@ subtypes of toxicity in them.
 
 By the nature of this approach and the kind of vectorization applied, you can
 recognize that the clustering is too tied to some words, specially those
-included in the list of bad words, and that some underlying structures to toxicity
-might be hidden or even ignored behind these strong indicators because of their
-relevance for the clustering technique applied.
+included in the list of bad words, and that some underlying structures to
+toxicity might be hidden or even ignored behind these strong indicators because
+of their relevance for the clustering technique applied.
 
 </details>
 
@@ -361,7 +359,7 @@ The distribution of chats in clusters was the following:
 As with the bag of words clustering, there are some clusters that include a big
 proportion of the messages. Those are clusters that reunites all those messages
 that are unique or couldn't be differentiated clearly of the rest of them.
-So they were discarded for the current analyisis.
+They were discarded for the current analyisis.
 
 Each message was annotated with their cluster, and then the reduced dataset
 was grouped by cluster:
@@ -625,20 +623,23 @@ print(w2v_group.get_group(22)[['match', 'text']].to_markdown())
 
 A dimensionality reduction with TSNE was applied to visualize the clusters and
 highlight the top toxic clusters of the [table](#w2v-score-table):
+
 ![TSNE graph - clustering](./images/TSNE_w2v.png)
  
 ##### Results
 ---
-It is important to note first the drawbacks of the score designed to reduce the
-scope of our analysis. Cluster number 19, for example, is not predominantly toxic
-but it has a higher score than clusters 12 and 22, that are clearly toxic. This is
-due to the nature of game, where the word "kill" is a common word.
 
-That said, it can be seen that the improvements in relation with the bag of 
-words approach are not so great. The most toxic clusters are smaller, the
-messages in them have more words in common and some syntax structure relation
-can be recognized. But all of that is not enough to obtain clearly separated kinds
-of toxicity in them.
+It is important to note first the drawbacks of the score designed to reduce the
+scope of our analysis. Cluster number 19, for example, is not predominantly
+toxic but it has a higher score than clusters 12 and 22, that are clearly
+toxic. This is due to the nature of game, where the word "kill" is a common
+word.
+
+That said, it can be seen that the improvements in relation with the bag of
+words approach was not so great. The most toxic clusters were smaller, the
+messages in them had more words in common and some syntax structure relation
+can be recognized. But all of that was not enough to obtain clearly separated
+kinds of toxicity in them.
 
 </details>
 
@@ -647,10 +648,11 @@ of toxicity in them.
 
 #### FastText clustering
 ---
+
 To explore further go the the [notebook](./clustering_ftt.ipynb).
 
 The number of clusters choosen for this approach was 100, because it generated
-a well distributed clustering with a good number of messages in each cluster.
+a well distributed clustering with 50 to 200 messages in each cluster.
 
 The distribution of chats in clusters was the following:
 
@@ -665,7 +667,6 @@ was grouped by cluster:
 ```python
 ftt_group = df_test.groupby('ftt_clusters')
 ```
-
 For each cluster a toxicity score was computed:
 
 ```python
@@ -918,13 +919,13 @@ are blended with non-toxic messages related to the development of the game.
 
 However, someone may argue that the proportion of toxic messages is great. That
 impresion can be misleading because the proportion is related to the fact that
-the clusters were filtered and selected watching the score of toxicity of each
-one and that number can have great variations when using larger datasets or
-different numbers of clusters.
+the clusters were filtered and selected focusing in the score of toxicity of
+each one and that number can have great variations when using larger datasets
+or different numbers of clusters.
 
-Finally, the characteristics mentioned above imply that it couldn't be found any
-topic or type of toxicity that gather all the messages in a cluster or at least,
-a great number of them.
+Finally, the characteristics mentioned above imply that it couldn't be found
+any topic or type of toxicity that collected all the messages in a cluster or
+at least, a great number of them.
 
 </details>
 
